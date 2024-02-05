@@ -1,4 +1,6 @@
 
+import PropTypes from 'prop-types';
+
 export default function Progress({ text, percentage }) {
   percentage ??= 0;
   return (
@@ -9,4 +11,9 @@ export default function Progress({ text, percentage }) {
     </div>
   );
 }
+
+Progress.propTypes = {
+  text: PropTypes.string.isRequired,
+  percentage: PropTypes.number
+};
 
