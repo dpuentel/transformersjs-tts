@@ -3,11 +3,17 @@
 @tailwind utilities;
 
 :root {
+  /* --background-color: #ffffff;
+  --text-color: #213547; */
+  --background-color: #192835;
+  --text-color: #ffffff;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #213547;
-  background-color: #ffffff;
+
+  color: var(--text-color);
+  background-color: var(--background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,5 +23,8 @@
 }
 
 audio::-webkit-media-controls-panel {
-  background-color: white;
+  background-color: #54647e;
+  color: var(--text-color);
+  border: 0px;
+  margin: 0px;
 }

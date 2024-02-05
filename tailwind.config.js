@@ -8,5 +8,6 @@ export default {
     extend: {},
   },
   plugins: [],
+  darkMode: 'class', // or 'media' if you want to use the OS color scheme
 }
 

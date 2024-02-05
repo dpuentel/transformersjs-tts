@@ -37,7 +37,7 @@ class MyTextToSpeechPipeline {
             });
         }
 
-        return new Promise(async (resolve, _) => {
+        return new Promise(async (resolve) => {
             const result = await Promise.all([
                 this.tokenizer,
                 this.model_instance,
