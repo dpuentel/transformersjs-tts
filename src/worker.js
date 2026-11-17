@@ -1,5 +1,5 @@
 
-import { env, Tensor, AutoTokenizer, SpeechT5ForTextToSpeech, SpeechT5HifiGan } from '@xenova/transformers';
+import { env, Tensor, AutoTokenizer, SpeechT5ForTextToSpeech, SpeechT5HifiGan } from '@huggingface/transformers';
 import { encodeWAV } from './utils';
 
 // Disable local model checks
@@ -20,34 +20,32 @@ class MyTextToSpeechPipeline {
 
     static async getInstance(progress_callback = null) {
         if (this.tokenizer_instance === null) {
-            this.tokenizer = AutoTokenizer.from_pretrained(this.model_id, { progress_callback });
+            this.tokenizer_instance = AutoTokenizer.from_pretrained(this.model_id, { progress_callback });
         }
 
         if (this.model_instance === null) {
             this.model_instance = SpeechT5ForTextToSpeech.from_pretrained(this.model_id, {
-                quantized: false,
+                dtype: 'fp32',
                 progress_callback,
             });
         }
 
         if (this.vocoder_instance === null) {
             this.vocoder_instance = SpeechT5HifiGan.from_pretrained(this.vocoder_id, {
-                quantized: false,
+                dtype: 'fp32',
                 progress_callback,
             });
         }
 
-        return new Promise(async (resolve) => {
-            const result = await Promise.all([
-                this.tokenizer,
-                this.model_instance,
-                this.vocoder_instance,
-            ]);
-            self.postMessage({
-                status: 'ready',
-            });
-            resolve(result);
+        const result = await Promise.all([
+            this.tokenizer_instance,
+            this.model_instance,
+            this.vocoder_instance,
+        ]);
+        self.postMessage({
+            status: 'ready',
         });
+        return result;
     }
 
     static async getSpeakerEmbeddings(speaker_id) {
