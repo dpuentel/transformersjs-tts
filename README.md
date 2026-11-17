@@ -1,14 +1,14 @@
 # Transformers.js - Text-to-Speech Demo
 
-Aplicación web en React y Vite para realizar síntesis de voz (**Text-to-Speech**) **100 % en el navegador**, sin servidor backend de inferencia. Utiliza [`@xenova/transformers`](https://huggingface.co/docs/transformers.js) dentro de un Web Worker para descargar y ejecutar modelos neuronales directamente en el cliente.
+Aplicación web en React y Vite para realizar síntesis de voz (**Text-to-Speech**) **100 % en el navegador**, sin servidor backend de inferencia. Utiliza [`@huggingface/transformers`](https://huggingface.co/docs/transformers.js) dentro de un Web Worker para descargar y ejecutar modelos neuronales directamente en el cliente.
 
 ## Stack tecnológico y modelos
 
-- **Frontend**: React 18 (`react`, `react-dom`), Vite 4, Tailwind CSS 3
-- **Inferencia en navegador**: `@xenova/transformers` (`^2.7.0`, respaldado por ONNX Runtime Web)
+- **Frontend**: React 18 (`react`, `react-dom`), Vite 5, Tailwind CSS 3
+- **Inferencia en navegador**: `@huggingface/transformers` (v3, respaldado por ONNX Runtime Web)
 - **Modelos y datos (descargados desde Hugging Face en el navegador)**:
-  - **Modelo TTS y tokenizador**: `Xenova/speecht5_tts` (`AutoTokenizer` + `SpeechT5ForTextToSpeech`, `quantized: false`)
-  - **Vocoder**: `Xenova/speecht5_hifigan` (`SpeechT5HifiGan`, `quantized: false`)
+  - **Modelo TTS y tokenizador**: `Xenova/speecht5_tts` (`AutoTokenizer` + `SpeechT5ForTextToSpeech`, `dtype: 'fp32'`)
+  - **Vocoder**: `Xenova/speecht5_hifigan` (`SpeechT5HifiGan`, `dtype: 'fp32'`)
   - **Embeddings de hablantes (x-vectors)**: dataset `Xenova/cmu-arctic-xvectors-extracted` en Hugging Face (`https://huggingface.co/datasets/Xenova/cmu-arctic-xvectors-extracted/resolve/main/`)
 
 ## Características y funcionamiento interno
@@ -31,11 +31,11 @@ Aplicación web en React y Vite para realizar síntesis de voz (**Text-to-Speech
 ```text
 .
 ├── compose.yml              # Orquestación con Docker Compose (servicio tts-app)
-├── Dockerfile               # Build multi-stage (Node 20 + pnpm -> Nginx Alpine)
+├── Dockerfile               # Build multi-stage (Node 22 + pnpm -> Nginx Alpine)
 ├── .dockerignore            # Exclusiones del contexto de build Docker
 ├── nginx.conf               # Configuración Nginx (SPA fallback, gzip, caché, /health)
 ├── index.html               # Documento HTML de entrada
-├── package.json             # Dependencias, scripts y packageManager (pnpm@8.15.9)
+├── package.json             # Dependencias, scripts y packageManager (pnpm@9.7.0)
 ├── pnpm-lock.yaml           # Lockfile de dependencias
 ├── postcss.config.js        # Configuración de PostCSS
 ├── tailwind.config.js       # Configuración de Tailwind CSS
@@ -54,7 +54,7 @@ Aplicación web en React y Vite para realizar síntesis de voz (**Text-to-Speech
 
 ## Desarrollo local
 
-Requisitos: Node.js (`>= 18` o Node 20 recomendado) y `pnpm` (el proyecto fija `"packageManager": "pnpm@8.15.9"`).
+Requisitos: Node.js (`>= 18` o Node 22 recomendado) y `pnpm` (el proyecto fija `"packageManager": "pnpm@9.7.0"`).
 
 ```bash
 # Instalar dependencias
